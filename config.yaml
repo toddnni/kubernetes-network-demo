@@ -1,0 +1,17 @@
+admin_password: admin
+rancher_version: v2.5.2
+k8s_version: ""
+server:
+  cpus: 2
+  memory: 3072
+node:
+  count: 2
+  cpus: 1
+  memory: 2048
+ip:
+  server: 172.22.101.101
+  node_start:  172.22.101.111
+linked_clones: true
+net:
+  private_net_type: bridge
+  private_net_name: rancher-private

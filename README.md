@@ -7,4 +7,11 @@ The Vagrant scripts setup has been copied from Rancher Quickstart <https://githu
 There is no License. So let's modify the Vagrantfile only
 
 
+Cluster Startup
+---------------
 
+    vagrant up
+
+IP of the Rancher UI is visible in
+
+    vagrant ssh-config server-01
