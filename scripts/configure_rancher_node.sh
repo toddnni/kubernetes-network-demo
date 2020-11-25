@@ -4,7 +4,7 @@ admin_password=${2:-password}
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
 
-agent_ip=`ip addr show eth1 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
+agent_ip=`ip addr show ens6 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
 echo $agent_ip `hostname` >> /etc/hosts
 
 for image in $curlimage $jqimage; do

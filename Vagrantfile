@@ -10,22 +10,21 @@ $prepare = <<SCRIPT
 set -e
 set -u
 set -x
-yum install -y docker
-systemctl enable docker
-systemctl start docker
-setenforce permissive # why? related to bind mount?
+apt-get update
+apt-get install -y docker.io
 SCRIPT
 
 
 Vagrant.configure(2) do |config|
   config.vm.define "server-01" do |server|
     c = x.fetch('server')
-    server.vm.box= "centos/7"
+    server.vm.box= "debian/buster64"
     #server.vm.guest = :linux
     server.vm.provider :libvirt do |domain|
       domain.memory = c.fetch('memory')
       domain.cpus = c.fetch('cpus')
     end
+    server.vm.synced_folder ".", "/vagrant", type: "rsync"
     server.vm.network :private_network,
       :type => x.fetch('net').fetch('private_net_type'),
       :network_name => x.fetch('net').fetch('private_net_name'),
@@ -41,12 +40,13 @@ Vagrant.configure(2) do |config|
     c = x.fetch('node')
     hostname = "node-%02d" % i
     config.vm.define hostname do |node|
-      node.vm.box   = "centos/7"
+      node.vm.box   = "debian/buster64"
       #node.vm.guest = :linux
       node.vm.provider :libvirt do |domain|
         domain.memory = c.fetch('memory')
         domain.cpus = c.fetch('cpus')
       end
+      node.vm.synced_folder ".", "/vagrant", type: "rsync"
       node.vm.network :private_network,
         :type => x.fetch('net').fetch('private_net_type'),
         :network_name => x.fetch('net').fetch('private_net_name'),
