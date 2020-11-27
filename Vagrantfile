@@ -19,7 +19,6 @@ Vagrant.configure(2) do |config|
   config.vm.define "server-01" do |server|
     c = x.fetch('server')
     server.vm.box= "debian/buster64"
-    #server.vm.guest = :linux
     server.vm.provider :libvirt do |domain|
       domain.memory = c.fetch('memory')
       domain.cpus = c.fetch('cpus')
@@ -32,7 +31,13 @@ Vagrant.configure(2) do |config|
 
     server.vm.hostname = "server-01"
     server.vm.provision "shell", inline: $prepare
-    server.vm.provision "shell", path: "scripts/configure_rancher_server.sh", args: [x.fetch('admin_password'), x.fetch('rancher_version'), x.fetch('k8s_version')]
+    server.vm.provision "shell", path: "scripts/configure_rancher_server.sh", args: [
+      x.fetch('ip').fetch('server'),
+      x.fetch('admin_password'),
+      x.fetch('rancher_version'),
+      x.fetch('k8s_version'),
+      x.fetch('net_iface')
+    ]
   end
 
   node_ip = IPAddr.new(x.fetch('ip').fetch('node_start'))
@@ -41,7 +46,6 @@ Vagrant.configure(2) do |config|
     hostname = "node-%02d" % i
     config.vm.define hostname do |node|
       node.vm.box   = "debian/buster64"
-      #node.vm.guest = :linux
       node.vm.provider :libvirt do |domain|
         domain.memory = c.fetch('memory')
         domain.cpus = c.fetch('cpus')
@@ -54,7 +58,11 @@ Vagrant.configure(2) do |config|
 
       node.vm.hostname = hostname
       node.vm.provision "shell", inline: $prepare
-      node.vm.provision "shell", path: "scripts/configure_rancher_node.sh", args: [x.fetch('ip').fetch('server'), x.fetch('admin_password')]
+      node.vm.provision "shell", path: "scripts/configure_rancher_node.sh", args: [
+        x.fetch('ip').fetch('server'),
+        x.fetch('admin_password'),
+        x.fetch('net_iface')
+      ]
     end
   end
 

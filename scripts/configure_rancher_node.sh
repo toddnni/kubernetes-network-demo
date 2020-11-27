@@ -1,10 +1,11 @@
 #!/bin/bash -x
 rancher_server_ip=${1:-172.22.101.101}
 admin_password=${2:-password}
+interface=${3:-eth1}
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
 
-agent_ip=`ip addr show ens6 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
+agent_ip=`ip addr show "$interface" | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
 echo $agent_ip `hostname` >> /etc/hosts
 
 for image in $curlimage $jqimage; do
