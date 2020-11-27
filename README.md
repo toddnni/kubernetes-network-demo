@@ -123,6 +123,12 @@ See the scrips inside `demo3/`.
     |   (ns1)   |  |   (ns2)   |
     +-----------+  +-----------+
 
+1. We are not able to limit the ingress traffic
+2. We can block the traffic egress traffic to only specific destinations
+3. We can block and allow traffic to apps with high granularity
+
+Note. That the rules are per namespace.
+
 Istio Service Mesh
 -----------------
 

@@ -1,2 +1,2 @@
 echo "# Leave this open and proceed to next"
-nc -lkv -p 8080
+while nc -lkv -p 8080; do echo restart; done
