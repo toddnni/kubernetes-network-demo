@@ -123,7 +123,7 @@ See the scrips inside `demo3/`.
     |   (ns1)   |  |   (ns2)   |
     +-----------+  +-----------+
 
-1. We are not able to limit the ingress traffic
+1. We are not able to limit the ingress traffic when the pods are using the host networking
 2. We can block the traffic egress traffic to only specific destinations
 3. We can block and allow traffic to apps with high granularity
 
