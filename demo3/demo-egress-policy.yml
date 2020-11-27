@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: demo-egress-policy
+  namespace: namespace2
+spec:
+  podSelector:
+    matchLabels:
+      app: shell2
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.22.101.101/32
+    ports:
+    - protocol: TCP
+      port: 8080
+

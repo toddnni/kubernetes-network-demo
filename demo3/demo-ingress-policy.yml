@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ingress-policy
+  namespace: namespace1
+spec:
+  podSelector:
+    matchLabels:
+      app: echoserver
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          allowed: "yes"
+      podSelector:
+        matchLabels:
+          app: shell2
+    ports:
+    - protocol: TCP
+      port: 8080
+  policyTypes:
+  - Ingress

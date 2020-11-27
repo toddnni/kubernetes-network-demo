@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: to-app-egress-policy
+  namespace: namespace2
+spec:
+  podSelector:
+    matchLabels:
+      app: shell2
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          project: namespace1
+    - podSelector:
+        matchLabels:
+          app: echoserver
+    ports:
+    - protocol: TCP
+      port: 80
+

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: shell1
+  name: shell1
+  namespace: namespace1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shell1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: shell1
+    spec:
+      containers:
+      - image: centos:8
+        name: centos
+        command: [ '/bin/sleep', '3600' ]
+        resources: {}
+      nodeSelector:
+        zone: A
+status: {}
